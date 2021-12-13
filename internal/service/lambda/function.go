@@ -62,27 +62,27 @@ func ResourceFunction() *schema.Resource {
 			"filename": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				ConflictsWith: []string{"s3_bucket", "s3_key", "s3_object_version", "image_uri"},
+				ConflictsWith: []string{"s3_bucket", "s3_key", "s3_object_version", "image_uri", "image_config"},
 			},
 			"s3_bucket": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				ConflictsWith: []string{"filename", "image_uri"},
+				ConflictsWith: []string{"filename", "image_uri", "image_config"},
 			},
 			"s3_key": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				ConflictsWith: []string{"filename", "image_uri"},
+				ConflictsWith: []string{"filename", "image_uri", "image_config"},
 			},
 			"s3_object_version": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				ConflictsWith: []string{"filename", "image_uri"},
+				ConflictsWith: []string{"filename", "image_uri", "image_config"},
 			},
 			"image_uri": {
 				Type:          schema.TypeString,
 				Optional:      true,
-				ConflictsWith: []string{"filename", "s3_bucket", "s3_key", "s3_object_version"},
+				ConflictsWith: []string{"filename", "s3_bucket", "s3_key", "s3_object_version", "runtime"},
 			},
 			"package_type": {
 				Type:         schema.TypeString,
@@ -113,6 +113,7 @@ func ResourceFunction() *schema.Resource {
 						},
 					},
 				},
+				ConflictsWith: []string{"filename", "s3_bucket", "s3_key", "s3_object_version", "runtime"},
 			},
 			"code_signing_config_arn": {
 				Type:         schema.TypeString,
@@ -207,6 +208,7 @@ func ResourceFunction() *schema.Resource {
 				Type:         schema.TypeString,
 				Optional:     true,
 				ValidateFunc: validation.StringInSlice(lambda.Runtime_Values(), false),
+				ConflictsWith: []string{"image_uri", "image_config"},
 			},
 			"timeout": {
 				Type:     schema.TypeInt,
